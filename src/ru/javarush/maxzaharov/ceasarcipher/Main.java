@@ -1,44 +1,17 @@
 package ru.javarush.maxzaharov.ceasarcipher;
 
-
-import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        //приветствие
+        dialog();
 
 
-        String whatYouWant = "Привет! Добро пожаловать в мир шифрования!\n" +
-                "Если Вы хотите зашифровать текст - нажмите 1 \n" +
-                "Если вы хотите расшифровать текст - нажмите 2";
-
-        System.out.println(whatYouWant);
-
-        String answer = "0";
-        while (!answer.equals("1") || !answer.equals("2")) {
-            answer = scanner.nextLine();
-            if (answer.equals("1") || answer.equals("2")) {
-                doYouHaveKey();
-                break;
-            } else {
-                System.out.println("Введен некорректный номер, введите 1 или 2");
-            }
-        }
-
-
-        //дописать метод
     }
 
-    public static int doYouHaveKey() {
-        Scanner scanner = new Scanner(System.in);
-        String haveKey = "У вас есть ключ? \n" +
-                "Если есть - нажмите 1 \n" +
-                "Если нет - нажмите 2";
-        System.out.println(haveKey);
+    /*public static int key() {
+
         int key = 0;
         String answer = "0";
         while (!answer.equals("1") || !answer.equals("2")) {
@@ -62,7 +35,70 @@ public class Main {
         }
 
         return key;
+    }*/
+
+    public static void dialog() {
+        System.out.println("Привет! Добро пожаловать в мир шифрования!\n" +
+                "Вы хотите зашифровать текст? Введите y или n");
+        if (question()) {
+            doYouHaveKey();
+            System.out.println("ок");
+        } else {
+            System.out.println("Вы хотите расшифровать текст? Введите y или n");
+            if (question()) {
+                doYouHaveKey();
+                if (question())
+                    enterKey();
+                System.out.println(keyFrom() + " - Это ваш ключ");
+                System.out.println("тоже ок");
+            } else {
+                System.out.println("Всего доброго!");
+                System.exit(1);
+            }
+
+        }
+    }
+
+    public static boolean question() {
+        Scanner scanner = new Scanner(System.in);
+        boolean yesOrNot = false;
+        String answer = "0";
+        while (true) {
+            answer = scanner.nextLine();
+            if ((answer.toLowerCase()).equals("y")) {
+                yesOrNot = true;
+                break;
+            }
+            if ((answer.toLowerCase()).equals("n")) {
+                yesOrNot = false;
+                break;
+            } else {
+                System.out.println("Ответ не корректный, введите y или n");
+            }
+        }
+        return yesOrNot;
+    }
+
+    public static void doYouHaveKey() {
+        System.out.println("У вас есть ключ шифрования?");
+    }
+
+    public static void enterKey() {
+        System.out.println("Пожалуйста введите целое число от 1 до 32");
     }
 
 
+    public static int keyFrom() {
+        Scanner scanner = new Scanner(System.in);
+        int key = 0;
+        while (key == 0) {
+            try {
+                key = scanner.nextInt();
+                break;
+            } catch (RuntimeException e) {
+                System.err.println("Введено не целое число! Попробуйте еще раз");
+            }
+        }
+        return key;
+    }
 }
