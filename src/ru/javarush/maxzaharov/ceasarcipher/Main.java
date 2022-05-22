@@ -4,53 +4,40 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
+    private static int key;
+
     public static void main(String[] args) {
         dialog();
-
-
     }
 
-    /*public static int key() {
-
-        int key = 0;
-        String answer = "0";
-        while (!answer.equals("1") || !answer.equals("2")) {
-            answer = scanner.nextLine();
-            if (answer.equals("1")) {
-                System.out.println("Введите ключ от 1 до 32");
-                try {
-                    key = scanner.nextInt();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            } else if (answer.equals("2")) {
-                System.out.println("Ключ будет сгенерирован случайным образом");
-                Random random = new Random();
-                key = random.nextInt(33);
-                break;
-            } else {
-                System.out.println("Введен некорректный номер, введите 1 или 2");
-            }
-        }
-
-        return key;
-    }*/
-
     public static void dialog() {
-        System.out.println("Привет! Добро пожаловать в мир шифрования!\n" +
+        System.out.println("Добро пожаловать в мир шифрования!\n" +
                 "Вы хотите зашифровать текст? Введите y или n");
         if (question()) {
             doYouHaveKey();
-            System.out.println("ок");
+            if (question()) {
+                enterKey();
+                do {
+                    key = keyFrom();
+                } while (key == 0);
+                System.out.println(key + " - Это ваш ключ");
+
+            } else {
+                System.out.println("Ключ будет сгенерирован случайным образом");
+                key = keyRandom();
+                System.out.println("Случайный ключ - " + key);
+            }
         } else {
             System.out.println("Вы хотите расшифровать текст? Введите y или n");
             if (question()) {
                 doYouHaveKey();
-                if (question())
+                if (question()) {
                     enterKey();
-                System.out.println(keyFrom() + " - Это ваш ключ");
-                System.out.println("тоже ок");
+                    do {
+                        key = keyFrom();
+                    } while (key == 0);
+                        System.out.println(key + " - Это ваш ключ");
+                }
             } else {
                 System.out.println("Всего доброго!");
                 System.exit(1);
@@ -61,7 +48,7 @@ public class Main {
 
     public static boolean question() {
         Scanner scanner = new Scanner(System.in);
-        boolean yesOrNot = false;
+        boolean yesOrNot;
         String answer = "0";
         while (true) {
             answer = scanner.nextLine();
@@ -87,18 +74,24 @@ public class Main {
         System.out.println("Пожалуйста введите целое число от 1 до 32");
     }
 
-
     public static int keyFrom() {
         Scanner scanner = new Scanner(System.in);
-        int key = 0;
-        while (key == 0) {
-            try {
-                key = scanner.nextInt();
-                break;
-            } catch (RuntimeException e) {
-                System.err.println("Введено не целое число! Попробуйте еще раз");
+        int keyFrom = 0;
+        try {
+            keyFrom = scanner.nextInt();
+            if (keyFrom == 0) {
+                System.out.println("Вы ввели ноль! Попробуйте еще раз!");
             }
+        } catch (RuntimeException e) {
+            System.err.println("Введено не целое число! Попробуйте еще раз");
         }
-        return key;
+        return keyFrom;
+    }
+
+    public static int keyRandom() {
+        int keyRandom;
+        Random random = new Random();
+        keyRandom = random.nextInt(33);
+        return keyRandom;
     }
 }
