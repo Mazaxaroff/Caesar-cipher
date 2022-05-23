@@ -1,5 +1,6 @@
 package ru.javarush.maxzaharov.ceasarcipher;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -49,14 +50,14 @@ public class Main {
     public static boolean question() {
         Scanner scanner = new Scanner(System.in);
         boolean yesOrNot;
-        String answer = "0";
+        String answer;
         while (true) {
             answer = scanner.nextLine();
-            if ((answer.toLowerCase()).equals("y")) {
+            if ("y".equals(answer.toLowerCase())) {
                 yesOrNot = true;
                 break;
             }
-            if ((answer.toLowerCase()).equals("n")) {
+            if ("n".equals(answer.toLowerCase())) {
                 yesOrNot = false;
                 break;
             } else {
@@ -83,7 +84,7 @@ public class Main {
                 System.out.println("Вы ввели ноль! Попробуйте еще раз!");
             }
         } catch (RuntimeException e) {
-            System.err.println("Введено не целое число! Попробуйте еще раз");
+            System.err.println("Введено не целое число! Попробуйте еще раз!");
         }
         return keyFrom;
     }
