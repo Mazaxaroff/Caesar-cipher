@@ -1,8 +1,9 @@
 package ru.javarush.maxzaharov.ceasarcipher;
 
-import java.util.Locale;
-import java.util.Random;
-import java.util.Scanner;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 public class Main {
     private static int key;
@@ -21,12 +22,15 @@ public class Main {
                 do {
                     key = keyFrom();
                 } while (key == 0);
-                System.out.println(key + " - Это ваш ключ");
+                for (String s : listFromFile(absolutPathOfFile())) {
+                    System.out.println(s);
+                }
+
 
             } else {
                 System.out.println("Ключ будет сгенерирован случайным образом");
                 key = keyRandom();
-                System.out.println("Случайный ключ - " + key);
+
             }
         } else {
             System.out.println("Вы хотите расшифровать текст? Введите y или n");
@@ -37,7 +41,9 @@ public class Main {
                     do {
                         key = keyFrom();
                     } while (key == 0);
-                        System.out.println(key + " - Это ваш ключ");
+
+                } else { //brutForse
+
                 }
             } else {
                 System.out.println("Всего доброго!");
@@ -83,7 +89,7 @@ public class Main {
             if (keyFrom == 0) {
                 System.out.println("Вы ввели ноль! Попробуйте еще раз!");
             }
-        } catch (RuntimeException e) {
+        } catch (InputMismatchException e) {
             System.err.println("Введено не целое число! Попробуйте еще раз!");
         }
         return keyFrom;
@@ -94,5 +100,34 @@ public class Main {
         Random random = new Random();
         keyRandom = random.nextInt(33);
         return keyRandom;
+    }
+
+    public static Path absolutPathOfFile() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Пожалуйста укажите путь к файлу, из которого требуется обработать текст");
+        String pathOfFile = "not file";
+        do {
+            pathOfFile = scanner.nextLine();
+            if (!Files.exists(Path.of(pathOfFile).toAbsolutePath())) {
+                System.out.println("Такого файла не существует, попробуйте еще раз!");
+            }
+        } while (!Files.exists(Path.of(pathOfFile).toAbsolutePath()));
+        Path absolutePathOfFile = Path.of(pathOfFile).toAbsolutePath();
+        return absolutePathOfFile;
+    }
+
+    public static List<String> listFromFile(Path path) {
+        List<String> listFromFile = new ArrayList<>();
+        if (Files.isReadable(path)) {
+            try {
+                listFromFile = Files.readAllLines(path);
+            } catch (IOException e) {
+                System.out.println("Произошла ошибка чтения файла");
+                ;
+            }
+        } else {
+            System.out.println("Невозможно прочитать файл");
+        }
+        return listFromFile;
     }
 }
