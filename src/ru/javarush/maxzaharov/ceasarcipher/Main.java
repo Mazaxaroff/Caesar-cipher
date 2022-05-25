@@ -2,6 +2,7 @@ package ru.javarush.maxzaharov.ceasarcipher;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -22,7 +23,7 @@ public class Main {
                 do {
                     key = keyFrom();
                 } while (key == 0);
-                for (String s : listFromFile(absolutPathOfFile())) {
+                for (String s : listFromFile(absolutePathOfFile())) {
                     System.out.println(s);
                 }
 
@@ -102,17 +103,27 @@ public class Main {
         return keyRandom;
     }
 
-    public static Path absolutPathOfFile() {
+    public static Path absolutePathOfFile() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Пожалуйста укажите путь к файлу, из которого требуется обработать текст");
-        String pathOfFile = "not file";
+        String pathOfFile;
         do {
             pathOfFile = scanner.nextLine();
-            if (!Files.exists(Path.of(pathOfFile).toAbsolutePath())) {
-                System.out.println("Такого файла не существует, попробуйте еще раз!");
+            try {
+                Path absolutePath = Path.of(pathOfFile).toAbsolutePath().normalize();
+                if (!Files.exists(absolutePath)) {
+                    System.out.println("Такого файла не существует, попробуйте еще раз!");
+                }
+                System.out.println(absolutePath);
+                System.out.println(Files.exists(absolutePath));
+            } catch (InvalidPathException e) {
+                System.err.println("Путь не может быть сконвертирован");
+                
+            } catch (SecurityException e) {
+                System.err.println("Ошибка безопасности");
             }
-        } while (!Files.exists(Path.of(pathOfFile).toAbsolutePath()));
-        Path absolutePathOfFile = Path.of(pathOfFile).toAbsolutePath();
+        } while (!Files.exists(Path.of(pathOfFile).toAbsolutePath().normalize()));
+        Path absolutePathOfFile = Path.of(pathOfFile).toAbsolutePath().normalize();
         return absolutePathOfFile;
     }
 
@@ -123,11 +134,12 @@ public class Main {
                 listFromFile = Files.readAllLines(path);
             } catch (IOException e) {
                 System.out.println("Произошла ошибка чтения файла");
-                ;
             }
         } else {
             System.out.println("Невозможно прочитать файл");
         }
         return listFromFile;
     }
+
+
 }
