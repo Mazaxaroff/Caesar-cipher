@@ -161,7 +161,8 @@ public class Main {
             try {
                 listFromFile = Files.readAllLines(path);
             } catch (IOException e) {
-                System.err.println("Произошла ошибка чтения файла! " + e.getMessage());
+                System.err.println("Произошла ошибка чтения файла! Проверьте кодировку файла! " + e.getMessage());
+                System.exit(3);
             }
         } else {
             System.out.println("Невозможно прочитать файл");
@@ -172,6 +173,9 @@ public class Main {
     public static List<Character> alfabet() {
         List<Character> alfabet = new ArrayList<>();
         for (char i = 'А'; i <= 'я'; i++) {
+            alfabet.add(i);
+        }
+        for (char i = '0'; i <= '9'; i++) {
             alfabet.add(i);
         }
         alfabet.add('.');
