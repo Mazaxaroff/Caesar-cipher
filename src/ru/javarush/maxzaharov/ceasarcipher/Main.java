@@ -1,7 +1,6 @@
 package ru.javarush.maxzaharov.ceasarcipher;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
@@ -11,7 +10,8 @@ public class Main {
     private static final int sizeOfAlfabet = alfabet().size();
     private static final List<Character> ALFABET = alfabet();
     private static final String EXIT = "Для выхода из программы введите exit";
-    private static final String GOODBAY ="Всего доброго!";
+    private static final String GOODBAY = "Операция успешно завершена! Всего доброго!";
+    private static final String YES_OR_NO = "Введите y или n\n";
 
     public static void main(String[] args) {
         dialog();
@@ -19,7 +19,7 @@ public class Main {
 
     public static void dialog() {
         System.out.println("Добро пожаловать в мир шифрования!\n" +
-                "Вы хотите зашифровать текст? Введите y или n\n" + EXIT);
+                "Вы хотите зашифровать текст?\n" +YES_OR_NO + EXIT);
         if (question()) {
             doYouHaveKey();
             if (question()) {
@@ -34,10 +34,12 @@ public class Main {
             } else {
                 System.out.println("Ключ будет сгенерирован случайным образом из диапазона возможных");
                 key = keyRandom();
+                writeToFile(cipherList(), pathOfFileOut());
+                System.out.println(GOODBAY);
 
             }
         } else {
-            System.out.println("Вы хотите расшифровать текст? Введите y или n\n" + EXIT);
+            System.out.println("Вы хотите расшифровать текст? \n" + YES_OR_NO + EXIT);
             if (question()) {
                 doYouHaveKey();
                 if (question()) {
@@ -45,11 +47,12 @@ public class Main {
                     do {
                         key = keyFrom();
                     } while (key == 0 || Math.abs(key) > sizeOfAlfabet);
-                   writeToFile(decipherList(), pathOfFileOut());
+                    writeToFile(decipherList(), pathOfFileOut());
                     System.out.println(GOODBAY);
 
-                } else { //brutForse
-
+                } else {
+                    bruteForсe();
+                    System.out.println(GOODBAY);
                 }
             } else {
                 System.out.println(GOODBAY);
@@ -72,18 +75,18 @@ public class Main {
                 yesOrNot = false;
                 break;
             } else if ("exit".equals(answer.toLowerCase())) {
-                System.out.println("Всего доброго!");
+                System.out.println(GOODBAY);
                 System.exit(2);
                 break;
             } else {
-                System.out.println("Ответ " + answer + " не корректный, введите y или n");
+                System.out.println("Ответ " + answer + " не корректный!\n" + YES_OR_NO);
             }
         }
         return yesOrNot;
     }
 
     public static void doYouHaveKey() {
-        System.out.println("У вас есть ключ шифрования?");
+        System.out.println("У вас есть ключ шифрования?\n" +YES_OR_NO + EXIT);
     }
 
     public static void enterKey() {
@@ -98,10 +101,10 @@ public class Main {
             if (keyFrom == 0) {
                 System.out.println("Вы ввели ноль! Попробуйте еще раз!");
             } else if (Math.abs(keyFrom) > sizeOfAlfabet) {
-                System.out.println("Число " + keyFrom + " выходит из диапазона ключей! Попробуйте еще раз!\n" + EXIT);
+                System.out.println("Число " + keyFrom + " выходит из диапазона ключей! Попробуйте еще раз!");
             }
         } catch (InputMismatchException e) {
-            System.err.println(keyFrom + "- не целое число! Попробуйте еще раз!\n" + EXIT);
+            System.err.println(keyFrom + "- не целое число! Попробуйте еще раз!");
         }
         return keyFrom;
     }
@@ -120,6 +123,10 @@ public class Main {
         String path;
         do {
             path = scanner.nextLine();
+            if ("exit".equals(path)) {
+                System.out.println(GOODBAY);
+                System.exit(2);
+            }
             try {
                 Path pathOfFile = Path.of(path);
                 if (!Files.exists(pathOfFile)) {
@@ -136,11 +143,15 @@ public class Main {
 
     public static Path pathOfFileOut() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Пожалуйста введите полный путь к файлу в который требуется записать зашифрованный текст\n"
+        System.out.println("Пожалуйста введите полный путь к файлу в который требуется записать измененный текст\n"
                 + EXIT);
         String path;
         do {
             path = scanner.nextLine();
+            if ("exit".equals(path)) {
+                System.out.println(GOODBAY);
+                System.exit(2);
+            }
             try {
                 Path pathOfFile = Path.of(path);
                 if (!Files.exists(pathOfFile)) {
@@ -243,6 +254,41 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.err.println("Произошла ошибка исходных данных!" + e.getMessage());
         }
+    }
+
+    public static void bruteForсe() {
+        int bruteForseKey;
+        List<String> temp = listFromFile(pathOfFileIn());
+        for (int i = 0; i < sizeOfAlfabet; i++) {
+            for (String stringOfText : temp) {
+                if (compare(decihper(stringOfText, i), dictionary())) {
+                    bruteForseKey = i;
+                    System.out.println("Ключ подобран, он равен - " + bruteForseKey);
+                    List<String> decipherList = new ArrayList<>();
+                    for (String str : temp) {
+                        decipherList.add(decihper(str, bruteForseKey));
+                    }
+                    writeToFile(decipherList, pathOfFileOut());
+                    break;
+                }
+            }
+        }
+    }
+
+    public static String[] dictionary() {
+        String[] dictionary = {" не ", " на ", " он ", " по ", " но ", " мы ", " из ", " то ", " за ", " от ", " ты ",
+                " же ", " вы ", " бы ", " до ", " её ", " во ", " со ", " ну ", " их ", " ли ", "да "};
+        return dictionary;
+    }
+
+    public static boolean compare(String check, String[] library) {
+        boolean gotcha = false;
+        for (String s : library) {
+            if (check.indexOf(s) != -1) {
+                gotcha = true;
+                break;
+            }
+        } return gotcha;
     }
 }
 
