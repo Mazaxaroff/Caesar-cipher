@@ -5,13 +5,8 @@ import java.util.List;
 
 public class Converter {
 
-    public static void cipherWithKey() {
-        WriteToFile.writeToFile(Lists.cipherList(Keys.getKey(false)), PathKeeper.pathOfFileOut());
-        Dialog.goodbay();
-    }
-
-    public static void cipherWithoutKey() {
-        WriteToFile.writeToFile(Lists.decipherList(Keys.getKey(true)), PathKeeper.pathOfFileOut());
+    public static void cipherWithWithoutKey(boolean isRandomKey) {
+        WriteToFile.writeToFile(Lists.cipherList(Keys.getKey(isRandomKey)), PathKeeper.pathOfFileOut());
         Dialog.goodbay();
     }
 
@@ -27,7 +22,7 @@ public class Converter {
             for (String stringOfText : temp) {
                 if (compare(CipherDecipher.decihper(stringOfText, i), dictionary())) {
                     bruteForceKey = i;
-                    System.out.println("Ключ подобран, он равен - " + bruteForceKey);
+                    Dialog.gotchaKey(bruteForceKey);
                     List<String> decipherList = new ArrayList<>();
                     for (String str : temp) {
                         decipherList.add(CipherDecipher.decihper(str, bruteForceKey));

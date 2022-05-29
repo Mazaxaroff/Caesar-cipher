@@ -20,18 +20,16 @@ public class Keys {
 
     public static int keyFrom() {
         Scanner scanner = new Scanner(System.in);
-        int keyFrom = 0;
+        int from = 0;
         try {
-            keyFrom = scanner.nextInt();
-            if (keyFrom == 0) {
-                System.out.println("Вы ввели ноль! Попробуйте еще раз!");
-            } else if (Math.abs(keyFrom) > Alfabet.sizeOfAlfabet()) {
-                System.out.println("Число " + keyFrom + " выходит из диапазона ключей! Попробуйте еще раз!");
+            from = scanner.nextInt();
+            if (from == 0 || Math.abs(from) > Alfabet.sizeOfAlfabet()) {
+                Dialog.wrongKey(from);
             }
         } catch (InputMismatchException e) {
-            System.err.println(keyFrom + "- не целое число! Попробуйте еще раз!");
+            Dialog.notInt(from);
         }
-        return keyFrom;
+        return from;
     }
 
     public static int keyRandom() {

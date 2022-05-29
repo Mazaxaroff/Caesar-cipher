@@ -1,5 +1,6 @@
 package ru.javarush.maxzaharov.ceasarcipher;
 
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Dialog {
@@ -19,10 +20,10 @@ public class Dialog {
             doYouHaveKey();
             if (question()) {
                 enterKey();
-                Converter.cipherWithKey();
+                Converter.cipherWithWithoutKey(false);
             } else {
                 System.out.println("Ключ будет сгенерирован случайным образом из диапазона возможных");
-                Converter.cipherWithoutKey();
+                Converter.cipherWithWithoutKey(true);
             }
         } else {
             System.out.println("Вы хотите расшифровать текст? \n" + YES_OR_NO + EXIT);
@@ -30,7 +31,7 @@ public class Dialog {
                 doYouHaveKey();
                 if (question()) {
                     enterKey();
-                   Converter.decipherWithKey();
+                    Converter.decipherWithKey();
 
                 } else {
                     Converter.bruteForce();
@@ -48,13 +49,13 @@ public class Dialog {
         String answer;
         while (true) {
             answer = scanner.nextLine();
-            if ("y".equals(answer.toLowerCase())) {
+            if ("y".equalsIgnoreCase(answer)) {
                 yesOrNot = true;
                 break;
-            } else if ("n".equals(answer.toLowerCase())) {
+            } else if ("n".equalsIgnoreCase(answer)) {
                 yesOrNot = false;
                 break;
-            } else if ("exit".equals(answer.toLowerCase())) {
+            } else if ("exit".equalsIgnoreCase(answer)) {
                 System.out.println(GOODBAY);
                 System.exit(2);
                 break;
@@ -85,8 +86,44 @@ public class Dialog {
         System.out.println(GOODBAY);
     }
 
-    public static String exit() {
-        return EXIT;
+    public static void gotchaKey(int k) {
+        System.out.println("Ключ подобран, он равен - " + k);
+    }
+
+    public static void exceptionMessageIO(String message) {
+        System.err.println("Произошла ошибка чтения файла! Проверьте кодировку файла! " + message);
+    }
+
+    public static void notReadableFile() {
+        System.out.println("Невозможно прочитать файл");
+    }
+
+    public static void haveNoFile (Path path){
+        System.out.println("Файла с путем " + path + " не существует, попробуйте еще раз!\n" + EXIT);
+    }
+
+    public static void isDirectory (Path path){
+        System.out.println(path + " является директорией, введите полный путь к файлу!\n" + EXIT);
+    }
+
+    public static void invalidPath (String message){
+        System.err.println("Путь не может быть сконвертирован " + message);
+    }
+
+    public static void wrongKey(int k){
+        System.out.println("Число " + k + " выходит из диапазона ключей! Попробуйте еще раз!");
+    }
+
+    public static void notInt(int k){
+        System.err.println(k + "- не целое число! Попробуйте еще раз!");
+    }
+
+    public static void outputException (String message){
+        System.err.println("Произошла ошибка вывода!" + message);
+    }
+
+    public static void outputIllegalArgumentException (String message){
+        System.err.println("Произошла ошибка исходных данных!" + message);
     }
 
 }

@@ -1,11 +1,8 @@
 package ru.javarush.maxzaharov.ceasarcipher;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PathKeeper {
@@ -22,14 +19,12 @@ public class PathKeeper {
             try {
                 Path pathOfFile = Path.of(path);
                 if (!Files.exists(pathOfFile)) {
-                    System.out.println("Файла с путем " + pathOfFile + " не существует, попробуйте еще раз!\n" +
-                            Dialog.exit());
+                    Dialog.haveNoFile(pathOfFile);
                 } else if (!Files.isRegularFile(pathOfFile)) {
-                    System.out.println(pathOfFile + " является директорией, введите полный путь к файлу!\n" +
-                            Dialog.exit());
+                    Dialog.isDirectory(pathOfFile);
                 }
             } catch (InvalidPathException e) {
-                System.err.println("Путь не может быть сконвертирован");
+                Dialog.invalidPath(e.getMessage());
             }
         } while (!Files.exists(Path.of(path)));
         return Path.of(path);
@@ -48,14 +43,12 @@ public class PathKeeper {
             try {
                 Path pathOfFile = Path.of(path);
                 if (!Files.exists(pathOfFile)) {
-                    System.out.println("Файла с путем " + pathOfFile + " не существует, попробуйте еще раз!\n" +
-                            Dialog.exit());
+                    Dialog.haveNoFile(pathOfFile);
                 } else if (!Files.isRegularFile(pathOfFile)) {
-                    System.out.println(pathOfFile + " является директорией, введите полный путь к файлу!\n" +
-                            Dialog.exit());
+                    Dialog.isDirectory(pathOfFile);
                 }
             } catch (InvalidPathException e) {
-                System.err.println("Путь не может быть сконвертирован");
+                Dialog.invalidPath(e.getMessage());
             }
         } while (!Files.exists(Path.of(path)));
         return Path.of(path);
