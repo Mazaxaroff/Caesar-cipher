@@ -33,7 +33,7 @@ public class Dialog {
                    Converter.decipherWithKey();
 
                 } else {
-                    Converter.bruteForсe();
+                    Converter.bruteForce();
                 }
             } else {
                 goodbay();

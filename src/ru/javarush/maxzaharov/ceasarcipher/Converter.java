@@ -20,17 +20,17 @@ public class Converter {
         Dialog.goodbay();
     }
 
-    public static void bruteForсe() {
-        int bruteForseKey;
+    public static void bruteForce() {
+        int bruteForceKey;
         List<String> temp = Lists.listFromFile(PathKeeper.pathOfFileIn());
         for (int i = 0; i < Alfabet.sizeOfAlfabet(); i++) {
             for (String stringOfText : temp) {
                 if (compare(CipherDecipher.decihper(stringOfText, i), dictionary())) {
-                    bruteForseKey = i;
-                    System.out.println("Ключ подобран, он равен - " + bruteForseKey);
+                    bruteForceKey = i;
+                    System.out.println("Ключ подобран, он равен - " + bruteForceKey);
                     List<String> decipherList = new ArrayList<>();
                     for (String str : temp) {
-                        decipherList.add(CipherDecipher.decihper(str, bruteForseKey));
+                        decipherList.add(CipherDecipher.decihper(str, bruteForceKey));
                     }
                     WriteToFile.writeToFile(decipherList, PathKeeper.pathOfFileOut());
                     break;
@@ -41,9 +41,9 @@ public class Converter {
     }
 
     public static String[] dictionary() {
-        String[] dictionary = {" не ", " на ", " он ", " по ", " но ", " мы ", " из ", " то ", " за ", " от ", " ты ",
+        return new String[] {" не ", " на ", " он ", " по ", " но ", " мы ", " из ", " то ", " за ", " от ", " ты ",
                 " же ", " вы ", " бы ", " до ", " её ", " во ", " со ", " ну ", " их ", " ли ", "да "};
-        return dictionary;
+
     }
 
     public static boolean compare(String check, String[] library) {

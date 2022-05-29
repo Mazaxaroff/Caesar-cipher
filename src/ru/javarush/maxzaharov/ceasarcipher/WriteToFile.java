@@ -12,7 +12,7 @@ public class WriteToFile {
             Files.write(path, list, StandardCharsets.UTF_8);
         } catch (IOException e) {
             System.err.println("Произошла ошибка вывода!" + e.getMessage());
-            ;
+
         } catch (IllegalArgumentException e) {
             System.err.println("Произошла ошибка исходных данных!" + e.getMessage());
         }
