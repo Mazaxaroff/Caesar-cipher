@@ -7,7 +7,8 @@ public class CipherDecipher {
         StringBuilder stringBuilder = new StringBuilder();
         for (char ch : s.toCharArray()) {
             if (Alfabet.alfabet().contains(ch)) {
-                char newChar = Alfabet.alfabet().get((Alfabet.alfabet().indexOf(ch) + shift) % Alfabet.sizeOfAlfabet());
+                char newChar = Alfabet.alfabet().get((Alfabet.alfabet().indexOf(ch) + (Alfabet.sizeOfAlfabet()
+                        + shift)) % Alfabet.sizeOfAlfabet());
                 stringBuilder.append(newChar);
             } else {
                 stringBuilder.append(ch);

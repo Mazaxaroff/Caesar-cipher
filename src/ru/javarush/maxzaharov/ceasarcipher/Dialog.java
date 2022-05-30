@@ -71,7 +71,8 @@ public class Dialog {
     }
 
     public static void enterKey() {
-        System.out.println("Пожалуйста введите целое число от 1 до " + Alfabet.sizeOfAlfabet());
+        System.out.println("Пожалуйста введите целое число от "
+                + -Alfabet.sizeOfAlfabet() + " до " + Alfabet.sizeOfAlfabet());
     }
 
     public static void pathIn() {

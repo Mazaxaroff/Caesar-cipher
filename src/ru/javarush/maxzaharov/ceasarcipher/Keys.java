@@ -23,7 +23,7 @@ public class Keys {
         int from = 0;
         try {
             from = scanner.nextInt();
-            if (from == 0 || Math.abs(from) > Alfabet.sizeOfAlfabet()) {
+            if (Math.abs(from) > Alfabet.sizeOfAlfabet()) {
                 Dialog.wrongKey(from);
             }
         } catch (InputMismatchException e) {
