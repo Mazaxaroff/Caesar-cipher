@@ -23,7 +23,7 @@ ___
 
 ## Запуск программы:
 
-[Запуск](./build/Caesar-cipher-v-0-0-1.jar)
+Запустить в командной строке:
 
 $ java -jar ./build/Caesar-cipher-v-0-0-1.jar
 ___
