@@ -1,32 +1,40 @@
 package ru.javarush.maxzaharov.ceasarcipher;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Alfabet {
-    public static List<Character> alfabet() {
-        List<Character> alfabet = new ArrayList<>();
+    private static final List<Character> ALPHABET;
+
+    static {
+        List<Character> alphabet = new ArrayList<>();
         for (char i = 'А'; i <= 'я'; i++) {
-            alfabet.add(i);
+            alphabet.add(i);
         }
         for (char i = '0'; i <= '9'; i++) {
-            alfabet.add(i);
+            alphabet.add(i);
         }
-        alfabet.add('.');
-        alfabet.add(',');
-        alfabet.add('"');
-        alfabet.add(':');
-        alfabet.add(';');
-        alfabet.add('-');
-        alfabet.add('!');
-        alfabet.add('?');
-        alfabet.add(')');
-        alfabet.add('(');
-        alfabet.add(' ');
-        return alfabet;
+        alphabet.add('.');
+        alphabet.add(',');
+        alphabet.add('"');
+        alphabet.add(':');
+        alphabet.add(';');
+        alphabet.add('-');
+        alphabet.add('!');
+        alphabet.add('?');
+        alphabet.add(')');
+        alphabet.add('(');
+        alphabet.add(' ');
+        ALPHABET = Collections.unmodifiableList(alphabet);
     }
 
-    public static int sizeOfAlfabet(){
-        return alfabet().size();
+    public static List<Character> get() {
+        return ALPHABET;
     }
+
+    public static int size() {
+        return ALPHABET.size();
+    }
+
 }

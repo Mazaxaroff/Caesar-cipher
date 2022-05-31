@@ -6,36 +6,36 @@ import java.util.Scanner;
 
 public class Keys {
 
-    public static int getKey(boolean isRandom) {
+    public static int get(boolean keyIsRandom) {
         int key;
-        if (isRandom) {
-            key = keyRandom();
+        if (keyIsRandom) {
+            key = random();
         } else {
             do {
-                key = keyFrom();
-            } while (key == 0 || Math.abs(key) > Alfabet.sizeOfAlfabet());
+                key = input();
+            } while (key == 0 || Math.abs(key) > Alfabet.size());
         }
         return key;
     }
 
-    public static int keyFrom() {
+    public static int input() {
         Scanner scanner = new Scanner(System.in);
-        int from = 0;
+        int key = 0;
         try {
-            from = scanner.nextInt();
-            if (Math.abs(from) > Alfabet.sizeOfAlfabet()) {
-                Dialog.wrongKey(from);
+            key = scanner.nextInt();
+            if (Math.abs(key) > Alfabet.size()) {
+                Dialog.wrongKey(key);
             }
         } catch (InputMismatchException e) {
-            Dialog.notInt(from);
+            Dialog.notInt(key);
         }
-        return from;
+        return key;
     }
 
-    public static int keyRandom() {
+    public static int random() {
         int keyRandom;
         Random random = new Random();
-        keyRandom = random.nextInt(Alfabet.sizeOfAlfabet());
+        keyRandom = random.nextInt(Alfabet.size());
         return keyRandom;
     }
 }

@@ -6,39 +6,23 @@ import java.nio.file.Path;
 import java.util.Scanner;
 
 public class PathKeeper {
-    public static Path pathOfFileIn() {
-        Scanner scanner = new Scanner(System.in);
+    public static Path inputPath() {
         Dialog.pathIn();
-        String path;
-        do {
-            path = scanner.nextLine();
-            if ("exit".equals(path)) {
-                Dialog.goodbay();
-                System.exit(2);
-            }
-            try {
-                Path pathOfFile = Path.of(path);
-                if (!Files.exists(pathOfFile)) {
-                    Dialog.haveNoFile(pathOfFile);
-                } else if (!Files.isRegularFile(pathOfFile)) {
-                    Dialog.isDirectory(pathOfFile);
-                }
-            } catch (InvalidPathException e) {
-                Dialog.invalidPath(e.getMessage());
-            }
-        } while (!Files.exists(Path.of(path)));
-        return Path.of(path);
+        return pathRequest();
     }
 
-    public static Path pathOfFileOut() {
-        Scanner scanner = new Scanner(System.in);
+    public static Path outputPath() {
         Dialog.pathOut();
+        return pathRequest();
+    }
+
+    public static Path pathRequest() {
+        Scanner scanner = new Scanner(System.in);
         String path;
         do {
             path = scanner.nextLine();
             if ("exit".equals(path)) {
-                Dialog.goodbay();
-                System.exit(2);
+                Dialog.bay();
             }
             try {
                 Path pathOfFile = Path.of(path);
@@ -53,7 +37,5 @@ public class PathKeeper {
         } while (!Files.exists(Path.of(path)));
         return Path.of(path);
     }
-
-
 
 }

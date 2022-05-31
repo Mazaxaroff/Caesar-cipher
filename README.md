@@ -12,12 +12,13 @@ ___
 ## Краткое описание классов
 ___
 + `Main` _- класс запуска программы;_
-+ `CipherDecipher` _- основные методы шифровки и дешифровки;_
-+ `Converter` _- 4 возможных сценария работы с текстовыми файлами;_
++ `CaesarCipher` _- основной метод шифровки и дешифровки;_
++ `CipherChoice` _- 4 возможных сценария работы с текстовыми файлами;_
 + `Dialog` _- логика общения с пользователем и набор сообщений;_
 + `PathKeeper` _- методы запроса путей файлов на чтение и запись;_
-+ `Lists` _- создание списков строк для чтения и записи файлов;_
++ `FileProcess` _- чтение и запись файлов;_
 + `Keys` _- запрос ключей шифрования;_
++ `Dictionary` _- словарь наиболее встречаемых слов для расшифровки текста методом bruteForce._
 + `Alfabet` _- список символов алфивита, цифр и знаков пунктуации._
 ___
 
@@ -76,34 +77,3 @@ n
 ~~~
 ___
 
-##Ключевые методы:
-
-
-~~~ java
-public static String cihper(String s, int shift) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char ch : s.toCharArray()) {
-            if (Alfabet.alfabet().contains(ch)) {
-                char newChar = Alfabet.alfabet().get((Alfabet.alfabet().indexOf(ch) + shift) % Alfabet.sizeOfAlfabet());
-                stringBuilder.append(newChar);
-            } else {
-                stringBuilder.append(ch);
-            }
-        }
-        return stringBuilder.toString();
-    }
-
-public static String decihper(String s, int shift) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char ch : s.toCharArray()) {
-            if (Alfabet.alfabet().contains(ch)) {
-                char newChar = Alfabet.alfabet().get((Alfabet.alfabet().indexOf(ch) + (Alfabet.sizeOfAlfabet()
-                        - shift)) % Alfabet.sizeOfAlfabet());
-                stringBuilder.append(newChar);
-            } else {
-                stringBuilder.append(ch);
-            }
-        }
-        return stringBuilder.toString();
-    }
-~~~

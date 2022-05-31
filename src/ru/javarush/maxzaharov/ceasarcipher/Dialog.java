@@ -6,40 +6,41 @@ import java.util.Scanner;
 public class Dialog {
 
     private static final String EXIT = "Для выхода из программы введите exit";
-    private static final String GOODBAY = "Операция успешно завершена! Всего доброго!";
+    private static final String BAY = "Операция успешно завершена! Всего доброго!";
     private static final String YES_OR_NO = "Введите y или n\n";
     private static final String PATH_IN = "Пожалуйста введите полный путь к файлу с кодировкой UTF8," +
             " из которого требуется обработать текст на русском языке\n";
     private static final String PATH_OUT = "Пожалуйста введите полный путь к файлу в который требуется записать " +
             "измененный текст\n";
 
-    public static void dialog() {
-        System.out.println("Добро пожаловать в мир шифрования!\n" +
-                "Вы хотите зашифровать текст?\n" + YES_OR_NO + EXIT);
+    public static void start() {
+        hello();
         if (question()) {
             doYouHaveKey();
             if (question()) {
                 enterKey();
-                Converter.cipherWithWithoutKey(false);
+                CipherChoice.encodingWithKey();
+                bay();
             } else {
-                System.out.println("Ключ будет сгенерирован случайным образом из диапазона возможных");
-                Converter.cipherWithWithoutKey(true);
+                randomKey();
+                CipherChoice.encodingWithoutKey();
+                bay();
             }
         } else {
-            System.out.println("Вы хотите расшифровать текст? \n" + YES_OR_NO + EXIT);
+            doYouNeedDecoding();
             if (question()) {
                 doYouHaveKey();
                 if (question()) {
                     enterKey();
-                    Converter.decipherWithKey();
-
+                    CipherChoice.decodingWithKey();
+                    bay();
                 } else {
-                    Converter.bruteForce();
+                    CipherChoice.bruteForce();
+                    bay();
                 }
             } else {
-                goodbay();
+                bay();
             }
-
         }
     }
 
@@ -56,7 +57,7 @@ public class Dialog {
                 yesOrNot = false;
                 break;
             } else if ("exit".equalsIgnoreCase(answer)) {
-                System.out.println(GOODBAY);
+                System.out.println(BAY);
                 System.exit(2);
                 break;
             } else {
@@ -66,13 +67,18 @@ public class Dialog {
         return yesOrNot;
     }
 
+    public static void hello(){
+        System.out.println("Добро пожаловать в мир шифрования!\n" +
+                "Вы хотите зашифровать текст?\n" + YES_OR_NO + EXIT);
+    }
+
     public static void doYouHaveKey() {
         System.out.println("У вас есть ключ шифрования?\n" + YES_OR_NO + EXIT);
     }
 
     public static void enterKey() {
         System.out.println("Пожалуйста введите целое число от "
-                + -Alfabet.sizeOfAlfabet() + " до " + Alfabet.sizeOfAlfabet());
+                + -Alfabet.size() + " до " + Alfabet.size());
     }
 
     public static void pathIn() {
@@ -83,12 +89,16 @@ public class Dialog {
         System.out.println(PATH_OUT + EXIT);
     }
 
-    public static void goodbay() {
-        System.out.println(GOODBAY);
+    public static void randomKey() {
+        System.out.println("Ключ будет сгенерирован случайным образом из диапазона возможных");
     }
 
-    public static void gotchaKey(int k) {
+    public static void keyFind(int k) {
         System.out.println("Ключ подобран, он равен - " + k);
+    }
+
+    public static void doYouNeedDecoding (){
+        System.out.println("Вы хотите расшифровать текст? \n" + YES_OR_NO + EXIT);
     }
 
     public static void exceptionMessageIO(String message) {
@@ -125,6 +135,11 @@ public class Dialog {
 
     public static void outputIllegalArgumentException (String message){
         System.err.println("Произошла ошибка исходных данных!" + message);
+    }
+
+    public static void bay() {
+        System.out.println(BAY);
+        System.exit(0);
     }
 
 }
