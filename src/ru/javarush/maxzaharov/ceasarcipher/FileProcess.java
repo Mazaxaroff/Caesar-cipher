@@ -15,7 +15,7 @@ public class FileProcess {
            Dialog.outputException(e.getMessage());
 
         } catch (IllegalArgumentException e) {
-            Dialog.outputIllegalArgumentException(e.getMessage());
+            Dialog.exceptionMessage(e.getMessage());
         }
     }
 

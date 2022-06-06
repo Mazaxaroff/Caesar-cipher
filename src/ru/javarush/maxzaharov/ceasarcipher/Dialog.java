@@ -133,7 +133,7 @@ public class Dialog {
         System.err.println("Произошла ошибка вывода!" + message);
     }
 
-    public static void outputIllegalArgumentException (String message){
+    public static void exceptionMessage(String message){
         System.err.println("Произошла ошибка исходных данных!" + message);
     }
 
