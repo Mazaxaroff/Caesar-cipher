@@ -5,19 +5,19 @@ import java.util.Scanner;
 
 public class Dialog {
 
-    private static final String EXIT = "Для выхода из программы введите exit";
-    private static final String BAY = "Операция успешно завершена! Всего доброго!";
-    private static final String YES_OR_NO = "Введите y или n\n";
-    private static final String PATH_IN = "Пожалуйста введите полный путь к файлу с кодировкой UTF8," +
+    private static final String EXIT_MESSAGE = "Для выхода из программы введите exit";
+    private static final String BAY_MESSAGE = "Операция успешно завершена! Всего доброго!";
+    private static final String YES_OR_NO_MESSAGE = "Введите y или n\n";
+    private static final String PATH_IN_MESSAGE = "Пожалуйста введите полный путь к файлу с кодировкой UTF8," +
             " из которого требуется обработать текст на русском языке\n";
-    private static final String PATH_OUT = "Пожалуйста введите полный путь к файлу в который требуется записать " +
+    private static final String PATH_OUT_MESSAGE = "Пожалуйста введите полный путь к файлу в который требуется записать " +
             "измененный текст\n";
 
     public static void start() {
         hello();
-        if (question()) {
+        if (readYesNoAnswer()) {
             doYouHaveKey();
-            if (question()) {
+            if (readYesNoAnswer()) {
                 enterKey();
                 CipherChoice.encodingWithKey();
                 bay();
@@ -28,9 +28,9 @@ public class Dialog {
             }
         } else {
             doYouNeedDecoding();
-            if (question()) {
+            if (readYesNoAnswer()) {
                 doYouHaveKey();
-                if (question()) {
+                if (readYesNoAnswer()) {
                     enterKey();
                     CipherChoice.decodingWithKey();
                     bay();
@@ -44,7 +44,7 @@ public class Dialog {
         }
     }
 
-    public static boolean question() {
+    public static boolean readYesNoAnswer() {
         Scanner scanner = new Scanner(System.in);
         boolean yesOrNot = false;
         String answer;
@@ -57,11 +57,11 @@ public class Dialog {
                 yesOrNot = false;
                 break;
             } else if ("exit".equalsIgnoreCase(answer)) {
-                System.out.println(BAY);
+                System.out.println(BAY_MESSAGE);
                 System.exit(2);
                 break;
             } else {
-                System.out.println("Ответ " + answer + " не корректный!\n" + YES_OR_NO);
+                System.out.println("Ответ " + answer + " не корректный!\n" + YES_OR_NO_MESSAGE);
             }
         }
         return yesOrNot;
@@ -69,11 +69,11 @@ public class Dialog {
 
     public static void hello(){
         System.out.println("Добро пожаловать в мир шифрования!\n" +
-                "Вы хотите зашифровать текст?\n" + YES_OR_NO + EXIT);
+                "Вы хотите зашифровать текст?\n" + YES_OR_NO_MESSAGE + EXIT_MESSAGE);
     }
 
     public static void doYouHaveKey() {
-        System.out.println("У вас есть ключ шифрования?\n" + YES_OR_NO + EXIT);
+        System.out.println("У вас есть ключ шифрования?\n" + YES_OR_NO_MESSAGE + EXIT_MESSAGE);
     }
 
     public static void enterKey() {
@@ -82,11 +82,11 @@ public class Dialog {
     }
 
     public static void pathIn() {
-        System.out.println(PATH_IN + EXIT);
+        System.out.println(PATH_IN_MESSAGE);
     }
 
     public static void pathOut() {
-        System.out.println(PATH_OUT + EXIT);
+        System.out.println(PATH_OUT_MESSAGE);
     }
 
     public static void randomKey() {
@@ -98,7 +98,7 @@ public class Dialog {
     }
 
     public static void doYouNeedDecoding (){
-        System.out.println("Вы хотите расшифровать текст? \n" + YES_OR_NO + EXIT);
+        System.out.println("Вы хотите расшифровать текст? \n" + YES_OR_NO_MESSAGE + EXIT_MESSAGE);
     }
 
     public static void exceptionMessageIO(String message) {
@@ -110,11 +110,11 @@ public class Dialog {
     }
 
     public static void haveNoFile (Path path){
-        System.out.println("Файла с путем " + path + " не существует, попробуйте еще раз!\n" + EXIT);
+        System.out.println("Файла с путем " + path + " не существует, попробуйте еще раз!\n" + EXIT_MESSAGE);
     }
 
     public static void isDirectory (Path path){
-        System.out.println(path + " является директорией, введите полный путь к файлу!\n" + EXIT);
+        System.out.println(path + " является директорией, введите полный путь к файлу!\n" + EXIT_MESSAGE);
     }
 
     public static void invalidPath (String message){
@@ -138,7 +138,7 @@ public class Dialog {
     }
 
     public static void bay() {
-        System.out.println(BAY);
+        System.out.println(BAY_MESSAGE);
         System.exit(0);
     }
 

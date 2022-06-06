@@ -22,12 +22,12 @@ public class CipherChoice {
         List<String> inputList = FileProcess.read(PathKeeper.inputPath());
         for (int i = 1; i < Alfabet.size(); i++) {
             for (String stringOfText : inputList) {
-                if (compare(CaesarCipher.process(stringOfText, -i), Dictionary.get())) {
+                if (compare(CaesarCipher.process(stringOfText, -i), Dictionary.getInstance())) {
                     bruteForceKey = i;
                     Dialog.keyFind(bruteForceKey);
                     List<String> outputList = new ArrayList<>();
-                    for (String str : inputList) {
-                        outputList.add(CaesarCipher.process(str, -bruteForceKey));
+                    for (String originalString : inputList) {
+                        outputList.add(CaesarCipher.process(originalString, -bruteForceKey));
                     }
                     FileProcess.write(outputList, PathKeeper.outputPath());
                     break;

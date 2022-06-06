@@ -33,9 +33,7 @@ public class Keys {
     }
 
     public static int random() {
-        int keyRandom;
         Random random = new Random();
-        keyRandom = random.nextInt(Alfabet.size());
-        return keyRandom;
+        return random.nextInt(Alfabet.size());
     }
 }

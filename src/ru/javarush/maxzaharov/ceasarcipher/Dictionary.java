@@ -7,7 +7,7 @@ public class Dictionary {
             " то ", " за ", " от ", " ты ", " же ", " вы ", " бы ", " до ", " её ", " во ", " со ", " ну ", " их ",
             " ли ", "да " };
 
-    public static String[] get(){
+    public static String[] getInstance(){
         return DICTIONARY;
     }
 
