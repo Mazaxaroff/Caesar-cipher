@@ -1,4 +1,4 @@
-package ru.javarush.maxzaharov.ceasarcipher;
+package ceasarcipher;
 
 import java.util.InputMismatchException;
 import java.util.Random;

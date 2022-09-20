@@ -1,4 +1,4 @@
-package ru.javarush.maxzaharov.ceasarcipher;
+package ceasarcipher;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

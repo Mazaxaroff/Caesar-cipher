@@ -1,4 +1,4 @@
-package ru.javarush.maxzaharov.ceasarcipher;
+package ceasarcipher;
 
 
 public class CaesarCipher {

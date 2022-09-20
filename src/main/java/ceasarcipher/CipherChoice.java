@@ -1,4 +1,4 @@
-package ru.javarush.maxzaharov.ceasarcipher;
+package ceasarcipher;
 
 import java.util.ArrayList;
 import java.util.List;

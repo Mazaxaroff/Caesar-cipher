@@ -1,4 +1,4 @@
-package ru.javarush.maxzaharov.ceasarcipher;
+package ceasarcipher;
 
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
